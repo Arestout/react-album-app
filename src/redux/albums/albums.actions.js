@@ -21,9 +21,9 @@ export function fetchPhotosForCount(albums) {
   };
 }
 
-export function updatePhotosForCount(photos) {
+export function updatePhotosForCount(photosCount) {
   return {
     type: types.UPDATE_PHOTOS_FOR_COUNT,
-    payload: photos,
+    payload: photosCount,
   };
 }
