@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
-import { createStructuredSelector } from 'reselect';
 
 import {
   closeGalleryModal,
@@ -9,45 +8,22 @@ import {
   updatePhotoIndexOnPrev,
 } from '../../redux/photos/photos.actions';
 
-import {
-  selectPhotosList,
-  galleryIsOpen,
-  getPhotoIndex,
-} from '../../redux/photos/photos.selectors';
-
 import 'react-image-lightbox/style.css';
 
-const LightboxGallery = (props) => {
-  const {
-    photos,
-    closeGalleryModal,
-    photoIndex,
-    updatePhotoIndexOnNext,
-    updatePhotoIndexOnPrev,
-  } = props;
+export const LightboxGallery = () => {
+  const { photosList, photoIndex } = useSelector((state) => state.photos);
+  const dispatch = useDispatch();
 
   return (
     <Lightbox
-      mainSrc={photos[photoIndex].url}
-      nextSrc={photos[(photoIndex + 1) % photos.length].url}
-      prevSrc={photos[(photoIndex + photos.length - 1) % photos.length].url}
-      onCloseRequest={() => closeGalleryModal()}
-      onMovePrevRequest={() => updatePhotoIndexOnPrev()}
-      onMoveNextRequest={() => updatePhotoIndexOnNext()}
+      mainSrc={photosList[photoIndex].url}
+      nextSrc={photosList[(photoIndex + 1) % photosList.length].url}
+      prevSrc={
+        photosList[(photoIndex + photosList.length - 1) % photosList.length].url
+      }
+      onCloseRequest={() => dispatch(closeGalleryModal())}
+      onMovePrevRequest={() => dispatch(updatePhotoIndexOnPrev())}
+      onMoveNextRequest={() => dispatch(updatePhotoIndexOnNext())}
     />
   );
 };
-
-const mapStateToProps = createStructuredSelector({
-  photos: selectPhotosList,
-  photoIndex: getPhotoIndex,
-  galleryIsOpen: galleryIsOpen,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  closeGalleryModal: () => dispatch(closeGalleryModal()),
-  updatePhotoIndexOnNext: () => dispatch(updatePhotoIndexOnNext()),
-  updatePhotoIndexOnPrev: () => dispatch(updatePhotoIndexOnPrev()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LightboxGallery);

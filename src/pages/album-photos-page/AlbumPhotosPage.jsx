@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Loader } from '../../components/loader/Loader';
 import Photo from '../../components/photo/Photo';
-import LightboxGallery from '../../components/lightbox-gallery/LightboxGallery';
+import { LightboxGallery } from '../../components/lightbox-gallery/LightboxGallery';
 
 import { useFetchPhotos } from '../../hooks/useFetchPhotos';
 
