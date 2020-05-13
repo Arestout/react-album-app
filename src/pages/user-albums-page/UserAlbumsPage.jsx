@@ -1,21 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import {
-  fetchAlbums,
-  fetchPhotosForCount,
-} from '../../redux/albums/albums.actions';
-import {
-  selectAlbumsList,
-  selectPhotosForCount,
-} from '../../redux/albums/albums.selectors';
-import { selectIsLoading } from '../../redux/app/app.selectors';
-
 import { Loader } from '../../components/loader/Loader';
 import Album from '../../components/album/Album';
+
+import { useFetchAlbums } from '../../hooks/useFetchAlbums';
 
 const UserAlbumsContainer = styled.div`
   min-height: 300px;
@@ -44,49 +34,27 @@ const AlbumsList = styled.ul`
   text-align: center;
 `;
 
-class UserAlbumsPage extends React.Component {
-  componentDidMount() {
-    const userId = this.props.match.params.id;
-    this.props.fetchAlbums(userId);
+const UserAlbumsPage = (props) => {
+  const userId = props.match.params.id;
+  const { albumsList, isLoading, photosForCount } = useFetchAlbums(userId);
+
+  const albums =
+    isLoading ||
+    albumsList.map((album) => (
+      <Album key={album.id} album={album} photosForCount={photosForCount} />
+    ));
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  render() {
-    const { albums, isLoading } = this.props;
+  return (
+    <UserAlbumsContainer>
+      <PageTitle> Albums</PageTitle>
+      <MenuLink to="/">Back to Users</MenuLink>
+      <AlbumsList>{albums}</AlbumsList>
+    </UserAlbumsContainer>
+  );
+};
 
-    if (isLoading) {
-      return <Loader />;
-    }
-
-    return (
-      <UserAlbumsContainer>
-        <PageTitle> Albums</PageTitle>
-        <MenuLink to="/">Back to Users</MenuLink>
-        <AlbumsList>
-          {albums.map((album) => (
-            <Album
-              key={album.id}
-              album={album}
-              photosForCount={this.props.photosForCount}
-            />
-          ))}
-        </AlbumsList>
-      </UserAlbumsContainer>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchAlbums: (userId) => dispatch(fetchAlbums(userId)),
-  fetchPhotosForCount: (albums) => dispatch(fetchPhotosForCount(albums)),
-});
-
-const mapStateToProps = createStructuredSelector({
-  albums: selectAlbumsList,
-  photosForCount: selectPhotosForCount,
-  isLoading: selectIsLoading,
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(UserAlbumsPage));
+export default withRouter(UserAlbumsPage);

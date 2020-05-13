@@ -1,19 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { fetchPhotos } from '../../redux/photos/photos.actions';
-import {
-  selectPhotosList,
-  galleryIsOpen,
-} from '../../redux/photos/photos.selectors';
-import { selectIsLoading } from '../../redux/app/app.selectors';
 
 import { Loader } from '../../components/loader/Loader';
 import Photo from '../../components/photo/Photo';
 import LightboxGallery from '../../components/lightbox-gallery/LightboxGallery';
+
+import { useFetchPhotos } from '../../hooks/useFetchPhotos';
 
 const PhotosContainer = styled.div`
   min-height: 300px;
@@ -42,50 +35,31 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-class AlbumsPhotoPage extends React.Component {
-  componentDidMount() {
-    const albumId = this.props.match.params.id;
-    this.props.fetchPhotos(albumId);
+const AlbumPhotosPage = (props) => {
+  const albumId = props.match.params.id;
+  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(albumId);
+
+  const photos =
+    isLoading ||
+    photosList.map((photo) => <Photo key={photo.id} photo={photo} />);
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  render() {
-    const { photos, isLoading, galleryIsOpen } = this.props;
-
-    if (isLoading) {
-      return <Loader />;
-    }
-
-    if (galleryIsOpen) {
-      return <LightboxGallery />;
-    }
-
-    return (
-      <PhotosContainer>
-        <PageTitle>Photos</PageTitle>
-        <MenuLink href="#" onClick={() => this.props.history.goBack()}>
-          Back to Albums
-        </MenuLink>
-        <PhotosList>
-          {photos.map((photo) => (
-            <Photo key={photo.id} photo={photo} />
-          ))}
-        </PhotosList>
-      </PhotosContainer>
-    );
+  if (galleryIsOpen) {
+    return <LightboxGallery />;
   }
-}
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPhotos: (albumId) => dispatch(fetchPhotos(albumId)),
-});
+  return (
+    <PhotosContainer>
+      <PageTitle>Photos</PageTitle>
+      <MenuLink href="#" onClick={() => props.history.goBack()}>
+        Back to Albums
+      </MenuLink>
+      <PhotosList>{photos}</PhotosList>
+    </PhotosContainer>
+  );
+};
 
-const mapStateToProps = createStructuredSelector({
-  photos: selectPhotosList,
-  isLoading: selectIsLoading,
-  galleryIsOpen: galleryIsOpen,
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(AlbumsPhotoPage));
+export default withRouter(AlbumPhotosPage);

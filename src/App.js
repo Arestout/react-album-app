@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { Header } from './components/header/Header';
 
-import UsersOverviewPage from './pages/users-overview-page/UsersOverviewPage';
+import { UsersOverviewPage } from './pages/users-overview-page/UsersOverviewPage';
 import UserAlbumsPage from './pages/user-albums-page/UserAlbumsPage';
 import AlbumPhotosPage from './pages/album-photos-page/AlbumPhotosPage';
 
