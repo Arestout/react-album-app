@@ -9,23 +9,4 @@ describe('app actions:', () => {
       type: types.SHOW_LOADER,
     });
   });
-
-  test('hideLoader', () => {
-    expect(actions.hideLoader()).toEqual({
-      type: types.HIDE_LOADER,
-    });
-  });
-
-  //   test('showError', () => {
-  //     expect(actions.showError(errorMessage)).toEqual({
-  //       type: types.SHOW_ERROR,
-  //       payload: errorMessage,
-  //     });
-  //   });
-
-  test('hideError', () => {
-    expect(actions.hideError()).toEqual({
-      type: types.HIDE_ERROR,
-    });
-  });
 });

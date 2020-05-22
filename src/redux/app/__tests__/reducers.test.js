@@ -3,7 +3,7 @@ import { appReducers } from '../app.reducers';
 
 const initialState = {
   isLoading: false,
-  errorMessage: null,
+  errorMessage: '',
 };
 
 const errorMessage = 'Error occurred';
@@ -33,11 +33,4 @@ describe('app reducers:', () => {
   //       errorMessage: errorMessage,
   //     });
   //   });
-
-  test('should set errorMessage to null', () => {
-    expect(appReducers(void 0, actions.hideError())).toEqual({
-      ...initialState,
-      errorMessage: null,
-    });
-  });
 });

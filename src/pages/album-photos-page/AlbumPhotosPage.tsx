@@ -1,13 +1,15 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { FC } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
+import * as types from '../../redux/photos/photos.types';
 
 import { Loader } from '../../components/loader/Loader';
-import Photo from '../../components/photo/Photo';
+import { Photo } from '../../components/photo/Photo';
 import { LightboxGallery } from '../../components/lightbox-gallery/LightboxGallery';
 
 import { useFetchPhotos } from '../../hooks/useFetchPhotos';
 
+// Styles
 const PhotosContainer = styled.div`
   min-height: 300px;
   margin: 0 0 0 100px;
@@ -35,13 +37,19 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-const AlbumPhotosPage = (props) => {
+// Types
+type MyProps = RouteComponentProps<{ id: string }>;
+
+// Component
+const AlbumPhotosPage: FC<MyProps> = (props) => {
   const albumId = props.match.params.id;
   const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(albumId);
 
   const photos =
     isLoading ||
-    photosList.map((photo) => <Photo key={photo.id} photo={photo} />);
+    photosList.map((photo: types.Photo) => (
+      <Photo key={photo.id} photo={photo} />
+    ));
 
   if (isLoading) {
     return <Loader />;

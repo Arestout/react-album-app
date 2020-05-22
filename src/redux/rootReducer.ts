@@ -11,3 +11,5 @@ export const rootReducer = combineReducers({
   albums: albumsReducers,
   photos: photosReducers,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;

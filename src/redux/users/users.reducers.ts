@@ -1,10 +1,17 @@
 import * as types from './users.types';
 
-const initialState = {
+export type UsersState = {
+  usersList: types.UsersList,
+};
+
+const initialState: UsersState = {
   usersList: [],
 };
 
-export const usersReducers = (state = initialState, action) => {
+export const usersReducers = (
+  state = initialState,
+  action: types.UsersActionTypes
+): UsersState => {
   switch (action.type) {
     case types.FETCH_USERS:
       return {

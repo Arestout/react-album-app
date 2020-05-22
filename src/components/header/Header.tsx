@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +25,11 @@ const LogoTitle = styled.p`
   text-align: center;
 `;
 
-export const Header = () => {
+type PropTypes = {
+  children?: never,
+};
+
+export const Header: FC<PropTypes> = () => {
   return (
     <HeaderContainer>
       <LogoContainer to="/">

@@ -1,7 +1,10 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { FC } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
+import * as types from '../../redux/albums/albums.types';
+
+// Styles
 const AlbumContainer = styled.li`
   display: inline-block;
   width: 200px;
@@ -37,12 +40,28 @@ const AlbumPoster = styled.img`
   border-radius: 5px;
 `;
 
-const getPhotosCount = (photosForCount, albumId) =>
+// Types
+type AlbumTypes = {
+  album: types.Album,
+  photosForCount: types.PhotosForCount,
+};
+
+// Utils
+const getPhotosCount = (
+  photosForCount: types.PhotosForCount,
+  albumId: number
+) =>
   photosForCount
     .filter((items) => items.id === albumId)
     .map((item) => item.count);
 
-const Album = ({ album, history, match, photosForCount }) => {
+// Component
+const Album: FC<AlbumTypes & RouteComponentProps> = ({
+  album,
+  history,
+  match,
+  photosForCount,
+}: AlbumTypes & RouteComponentProps) => {
   const photosCount = getPhotosCount(photosForCount, album.id);
 
   return (

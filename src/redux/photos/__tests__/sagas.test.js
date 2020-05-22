@@ -4,7 +4,9 @@ import { throwError } from 'redux-saga-test-plan/providers';
 
 import * as actions from '../photos.actions';
 import { hideLoader, showError, showLoader } from '../../app/app.actions';
-import { sagaWorker, fetchPhotos } from '../photos.sagas';
+import { sagaWorker } from '../photos.sagas';
+
+import { api } from '../../../api/api';
 
 const albumId = '1';
 const photos = [
@@ -16,7 +18,7 @@ describe('photos saga', () => {
   test('should fetch and update photos', async () => {
     await expectSaga(sagaWorker)
       .put(showLoader())
-      .provide([[call(fetchPhotos, albumId)]])
+      .provide([[call(api.get, `albums/${albumId}/photos`)]])
       .put(actions.updatePhotos(photos))
       .put(hideLoader());
   });
@@ -25,7 +27,7 @@ describe('photos saga', () => {
     const error = new Error('error');
     await expectSaga(sagaWorker)
       .put(showLoader())
-      .provide([[call(fetchPhotos, throwError(error))]])
+      .provide([[call(api.get, throwError(error))]])
       .put(showError(error))
       .put(hideLoader());
   });

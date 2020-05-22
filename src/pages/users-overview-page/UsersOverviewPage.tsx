@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../../components/loader/Loader';
 import User from '../../components/user/User';
+import { User as UserType } from '../../redux/users/users.types';
 
 import { useFetchUsers } from '../../hooks/useFetchUsers';
 
@@ -24,11 +25,12 @@ const UsersList = styled.ul`
   text-align: center;
 `;
 
-export const UsersOverviewPage = () => {
+export const UsersOverviewPage: FC = () => {
   const { usersList, isLoading } = useFetchUsers();
 
   const users =
-    isLoading || usersList.map((user) => <User key={user.id} user={user} />);
+    isLoading ||
+    usersList.map((user: UserType) => <User key={user.id} user={user} />);
 
   if (isLoading) {
     return <Loader />;

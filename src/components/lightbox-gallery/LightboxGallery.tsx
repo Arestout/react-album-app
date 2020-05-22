@@ -7,11 +7,15 @@ import {
   updatePhotoIndexOnNext,
   updatePhotoIndexOnPrev,
 } from '../../redux/photos/photos.actions';
+import { PhotosState } from '../../redux/photos/photos.reducers';
+import { RootState } from '../../redux/rootReducer';
 
 import 'react-image-lightbox/style.css';
 
 export const LightboxGallery = () => {
-  const { photosList, photoIndex } = useSelector((state) => state.photos);
+  const { photosList, photoIndex } = useSelector<RootState, PhotosState>(
+    (state: RootState) => state.photos
+  );
   const dispatch = useDispatch();
 
   return (

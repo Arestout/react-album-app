@@ -4,7 +4,7 @@ import { photosReducers } from '../photos.reducers';
 const initialState = {
   photosList: [],
   galleryIsOpen: false,
-  photoIndex: null,
+  photoIndex: 0,
 };
 
 const photos = [

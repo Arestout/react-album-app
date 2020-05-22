@@ -1,10 +1,20 @@
 import { put, call } from 'redux-saga/effects';
+import { SagaIterator } from '@redux-saga/core';
+import { ActionCreator, AnyAction } from 'redux';
 
 import { hideLoader, showError, showLoader } from './app.actions';
 
 import { api } from '../../api/api';
 
-export function* makeRequestWithSpinner(options) {
+type OptionsTypes = {
+  fetcherParam?: string,
+  update: ActionCreator<AnyAction>,
+  showError: ActionCreator<AnyAction>,
+  showLoader: ActionCreator<AnyAction>,
+  hideLoader: ActionCreator<AnyAction>,
+};
+
+export function* makeRequestWithSpinner(options: OptionsTypes): SagaIterator {
   const { fetcherParam, update } = options;
 
   try {

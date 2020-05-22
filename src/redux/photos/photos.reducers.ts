@@ -1,12 +1,21 @@
 import * as types from './photos.types';
 
-const initialState = {
-  photosList: [],
-  galleryIsOpen: false,
-  photoIndex: null,
+export type PhotosState = {
+  photosList: types.Photos,
+  galleryIsOpen: boolean,
+  photoIndex: number,
 };
 
-export const photosReducers = (state = initialState, action) => {
+const initialState: PhotosState = {
+  photosList: [],
+  galleryIsOpen: false,
+  photoIndex: 0,
+};
+
+export const photosReducers = (
+  state = initialState,
+  action: types.PhotosActionTypes
+): PhotosState => {
   switch (action.type) {
     case types.FETCH_PHOTOS:
       return {

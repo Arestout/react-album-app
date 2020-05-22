@@ -1,11 +1,19 @@
 import * as types from './albums.types';
 
-const initialState = {
+export type AlbumsState = {
+  albumsList: types.Albums,
+  photosForCount: types.PhotosForCount,
+};
+
+const initialState: AlbumsState = {
   albumsList: [],
   photosForCount: [],
 };
 
-export const albumsReducers = (state = initialState, action) => {
+export const albumsReducers = (
+  state = initialState,
+  action: types.AlbumsActionTypes
+): AlbumsState => {
   switch (action.type) {
     case types.FETCH_ALBUMS:
       return {

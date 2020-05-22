@@ -1,11 +1,19 @@
 import * as types from './app.types';
 
-const initialState = {
-  isLoading: false,
-  errorMessage: null,
+export type AppState = {
+  isLoading: boolean,
+  errorMessage: string,
 };
 
-export const appReducers = (state = initialState, action) => {
+const initialState: AppState = {
+  isLoading: false,
+  errorMessage: '',
+};
+
+export const appReducers = (
+  state = initialState,
+  action: types.AppActionTypes
+): AppState => {
   switch (action.type) {
     case types.SHOW_LOADER:
       return { ...state, isLoading: true };
@@ -13,8 +21,6 @@ export const appReducers = (state = initialState, action) => {
       return { ...state, isLoading: false };
     case types.SHOW_ERROR:
       return { ...state, errorMessage: action.payload };
-    case types.HIDE_ERROR:
-      return { ...state, errorMessage: null };
     default:
       return state;
   }

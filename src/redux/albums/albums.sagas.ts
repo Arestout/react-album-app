@@ -1,4 +1,5 @@
 import { takeEvery, put, call, all } from 'redux-saga/effects';
+import { SagaIterator } from '@redux-saga/core';
 
 import * as types from './albums.types';
 import { hideLoader, showError, showLoader } from '../app/app.actions';
@@ -6,18 +7,18 @@ import { updateAlbums, updatePhotosForCount } from './albums.actions';
 
 import { api } from '../../api/api';
 
-const albumsPhotosCount = [];
+const albumsPhotosCount: types.PhotosForCount = [];
 
-export function* fetchAlbumsSaga() {
+export function* fetchAlbumsSaga(): SagaIterator {
   yield takeEvery(types.FETCH_ALBUMS, fetchAlbumsSagaWorker);
 }
 
-export function* fetchAlbumsSagaWorker({ payload: userId }) {
+export function* fetchAlbumsSagaWorker({ payload: userId }: any): Generator {
   try {
     yield put(showLoader());
-    const albums = yield call(api.get, `users/${userId}/albums`);
+    const albums: any = yield call(api.get, `users/${userId}/albums`);
     yield put(updateAlbums(albums));
-    yield all(albums.map((album) => call(getPhotosLength, album.id)));
+    yield all(albums.map((album: any) => call(getPhotosLength, album.id)));
     yield put(updatePhotosForCount(albumsPhotosCount));
     yield put(hideLoader());
     yield (albumsPhotosCount.length = 0);
@@ -27,7 +28,7 @@ export function* fetchAlbumsSagaWorker({ payload: userId }) {
   }
 }
 
-export function* getPhotosLength(albumId) {
+export function* getPhotosLength(albumId: number) {
   const photos = yield call(api.get, `albums/${albumId}/photos`);
   albumsPhotosCount.push({ id: albumId, count: photos.length });
 }

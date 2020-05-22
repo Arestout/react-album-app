@@ -1,7 +1,10 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { FC } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
+import * as types from '../../redux/users/users.types';
+
+// Styles
 const UserContainer = styled.li`
   display: inline-block;
   width: 200px;
@@ -32,7 +35,16 @@ const UserAvatar = styled.img`
   border-radius: 50%;
 `;
 
-const User = ({ user, history }) => (
+// Types
+type UserTypes = {
+  user: types.User,
+};
+
+// Component
+const User: FC<UserTypes & RouteComponentProps> = ({
+  user,
+  history,
+}: UserTypes & RouteComponentProps) => (
   <UserContainer onClick={() => history.push(`/users/${user.id}/albums`)}>
     <ContentBlock>
       <UserAvatar src="https://picsum.photos/150" />
