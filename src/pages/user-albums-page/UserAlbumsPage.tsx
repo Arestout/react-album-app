@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { withRouter, Link, RouteComponentProps } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import * as types from '../../redux/albums/albums.types';
 
@@ -8,7 +8,6 @@ import Album from '../../components/album/Album';
 
 import { useFetchAlbums } from '../../hooks/useFetchAlbums';
 
-// Styles
 const UserAlbumsContainer = styled.div`
   min-height: 300px;
   margin: 0 0 0 100px;
@@ -36,13 +35,10 @@ const AlbumsList = styled.ul`
   text-align: center;
 `;
 
-// Types
-type MyProps = RouteComponentProps<{ id: string }>;
+export const UserAlbumsPage: FC = () => {
+  const { id } = useParams();
 
-// Component
-const UserAlbumsPage: FC<MyProps> = (props) => {
-  const userId = props.match.params.id;
-  const { albumsList, isLoading, photosForCount } = useFetchAlbums(userId);
+  const { albumsList, isLoading, photosForCount } = useFetchAlbums(id);
 
   const albums =
     isLoading ||
@@ -62,5 +58,3 @@ const UserAlbumsPage: FC<MyProps> = (props) => {
     </UserAlbumsContainer>
   );
 };
-
-export default withRouter(UserAlbumsPage);

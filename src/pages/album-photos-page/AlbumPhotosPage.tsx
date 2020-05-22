@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import * as types from '../../redux/photos/photos.types';
 
@@ -9,7 +9,6 @@ import { LightboxGallery } from '../../components/lightbox-gallery/LightboxGalle
 
 import { useFetchPhotos } from '../../hooks/useFetchPhotos';
 
-// Styles
 const PhotosContainer = styled.div`
   min-height: 300px;
   margin: 0 0 0 100px;
@@ -37,13 +36,10 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-// Types
-type MyProps = RouteComponentProps<{ id: string }>;
-
-// Component
-const AlbumPhotosPage: FC<MyProps> = (props) => {
-  const albumId = props.match.params.id;
-  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(albumId);
+export const AlbumPhotosPage: FC = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(id);
 
   const photos =
     isLoading ||
@@ -62,12 +58,10 @@ const AlbumPhotosPage: FC<MyProps> = (props) => {
   return (
     <PhotosContainer>
       <PageTitle>Photos</PageTitle>
-      <MenuLink href="#" onClick={() => props.history.goBack()}>
+      <MenuLink href="#" onClick={() => history.goBack()}>
         Back to Albums
       </MenuLink>
       <PhotosList>{photos}</PhotosList>
     </PhotosContainer>
   );
 };
-
-export default withRouter(AlbumPhotosPage);
