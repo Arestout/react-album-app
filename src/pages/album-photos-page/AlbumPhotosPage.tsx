@@ -36,12 +36,7 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-export const AlbumPhotosPage: FC = () => {
-  const { id } = useParams();
-  const history = useHistory();
-  const { url } = useRouteMatch();
-  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(id);
-
+const getBackButtonUrl = (url: string) => {
   let backButtonUrl = '';
   if (url.charAt(url.length - 1) === '/') {
     backButtonUrl = url.slice(0, url.lastIndexOf('/'));
@@ -49,6 +44,16 @@ export const AlbumPhotosPage: FC = () => {
   } else {
     backButtonUrl = url.slice(0, url.lastIndexOf('/'));
   }
+  console.log(backButtonUrl);
+  return backButtonUrl;
+};
+
+export const AlbumPhotosPage: FC = () => {
+  const { id } = useParams();
+  const history = useHistory();
+  const { url } = useRouteMatch();
+  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(id);
+  const backButtonUrl = getBackButtonUrl(url);
 
   const photos =
     isLoading ||
