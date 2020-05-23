@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import { Loader } from '../../components/loader/Loader';
-import User from '../../components/user/User';
+import { User } from '../../components/user/User';
 import { User as UserType } from '../../redux/users/users.types';
 
 import { useFetchUsers } from '../../hooks/useFetchUsers';

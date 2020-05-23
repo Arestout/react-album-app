@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as types from '../../redux/albums/albums.types';
@@ -56,23 +56,28 @@ const getPhotosCount = (
     .map((item) => item.count);
 
 // Component
-const Album: FC<AlbumTypes & RouteComponentProps> = ({
+export const Album: FC<AlbumTypes> = ({
   album,
-  history,
-  match,
   photosForCount,
-}: AlbumTypes & RouteComponentProps) => {
+}: AlbumTypes) => {
   const photosCount = getPhotosCount(photosForCount, album.id);
+  const location = useLocation();
+  const match = useRouteMatch();
 
   return (
-    <AlbumContainer onClick={() => history.push(`${match.url}/${album.id}`)}>
-      <ContentBlock>
-        <AlbumPoster src="https://picsum.photos/150" />
-        <AlbumTitle>{album.title}</AlbumTitle>
-        <PhotosCount>Photos: {photosCount} </PhotosCount>
-      </ContentBlock>
-    </AlbumContainer>
+    <Link
+      to={{
+        pathname: `${match.url}/${album.id}`,
+        state: { from: location },
+      }}
+    >
+      <AlbumContainer>
+        <ContentBlock>
+          <AlbumPoster src="https://picsum.photos/150" />
+          <AlbumTitle>{album.title}</AlbumTitle>
+          <PhotosCount>Photos: {photosCount} </PhotosCount>
+        </ContentBlock>
+      </AlbumContainer>
+    </Link>
   );
 };
-
-export default withRouter(Album);

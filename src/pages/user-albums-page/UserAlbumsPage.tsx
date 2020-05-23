@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as types from '../../redux/albums/albums.types';
 
 import { Loader } from '../../components/loader/Loader';
-import Album from '../../components/album/Album';
+import { Album } from '../../components/album/Album';
 
 import { useFetchAlbums } from '../../hooks/useFetchAlbums';
 

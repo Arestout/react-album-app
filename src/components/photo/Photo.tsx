@@ -24,17 +24,14 @@ const Image = styled.img`
   border-radius: 5px;
 `;
 
-// type PhotoTypes = {
-//   thumbnailUrl: string,
-//   title: string,
-//   id: string,
-//   children?: ReactNode,
-//   photo: PhotoType,
-// };
+// Types
+type PhotoTypes = {
+  photo: PhotoType,
+};
 
-export const Photo: FC<any> = (props: any) => {
+export const Photo: FC<PhotoTypes> = ({ photo }: PhotoTypes) => {
   const dispatch = useDispatch();
-  const photo: PhotoType = props.photo;
+
   return (
     <PhotoContainer>
       <Image

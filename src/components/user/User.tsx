@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as types from '../../redux/users/users.types';
@@ -41,16 +41,15 @@ type UserTypes = {
 };
 
 // Component
-const User: FC<UserTypes & RouteComponentProps> = ({
-  user,
-  history,
-}: UserTypes & RouteComponentProps) => (
-  <UserContainer onClick={() => history.push(`/users/${user.id}/albums`)}>
-    <ContentBlock>
-      <UserAvatar src="https://picsum.photos/150" />
-      <UserName>{user.name}</UserName>
-    </ContentBlock>
-  </UserContainer>
-);
+export const User: FC<UserTypes> = ({ user }: UserTypes) => {
+  const history = useHistory();
 
-export default withRouter(User);
+  return (
+    <UserContainer onClick={() => history.push(`/users/${user.id}/albums`)}>
+      <ContentBlock>
+        <UserAvatar src="https://picsum.photos/150" />
+        <UserName>{user.name}</UserName>
+      </ContentBlock>
+    </UserContainer>
+  );
+};
