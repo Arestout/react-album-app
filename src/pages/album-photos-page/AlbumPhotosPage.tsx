@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import * as types from '../../redux/photos/photos.types';
 
@@ -39,9 +39,16 @@ const PhotosList = styled.ul`
 export const AlbumPhotosPage: FC = () => {
   const { id } = useParams();
   const history = useHistory();
-  const location = useLocation();
-  const { from } = location.state;
+  const { url } = useRouteMatch();
   const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(id);
+
+  let backButtonUrl = '';
+  if (url.charAt(url.length - 1) === '/') {
+    backButtonUrl = url.slice(0, url.lastIndexOf('/'));
+    backButtonUrl = backButtonUrl.slice(0, backButtonUrl.lastIndexOf('/'));
+  } else {
+    backButtonUrl = url.slice(0, url.lastIndexOf('/'));
+  }
 
   const photos =
     isLoading ||
@@ -60,7 +67,7 @@ export const AlbumPhotosPage: FC = () => {
   return (
     <PhotosContainer>
       <PageTitle>Photos</PageTitle>
-      <MenuLink href="#" onClick={() => history.push(`${from.pathname}`)}>
+      <MenuLink href="#" onClick={() => history.push(`${backButtonUrl}`)}>
         Back to Albums
       </MenuLink>
       <PhotosList>{photos}</PhotosList>

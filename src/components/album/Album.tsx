@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useRouteMatch, Link, useLocation } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as types from '../../redux/albums/albums.types';
@@ -61,16 +61,10 @@ export const Album: FC<AlbumTypes> = ({
   photosForCount,
 }: AlbumTypes) => {
   const photosCount = getPhotosCount(photosForCount, album.id);
-  const location = useLocation();
   const match = useRouteMatch();
 
   return (
-    <Link
-      to={{
-        pathname: `${match.url}/${album.id}`,
-        state: { from: location },
-      }}
-    >
+    <Link to={`${match.url}/${album.id}`}>
       <AlbumContainer>
         <ContentBlock>
           <AlbumPoster src="https://picsum.photos/150" />
