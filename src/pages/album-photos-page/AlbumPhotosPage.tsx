@@ -36,7 +36,7 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-const getBackButtonUrl = (url: string) => {
+const getBackButtonUrl = (url: string): string => {
   let backButtonUrl = '';
   if (url.charAt(url.length - 1) === '/') {
     backButtonUrl = url.slice(0, url.lastIndexOf('/'));
@@ -44,7 +44,6 @@ const getBackButtonUrl = (url: string) => {
   } else {
     backButtonUrl = url.slice(0, url.lastIndexOf('/'));
   }
-  console.log(backButtonUrl);
   return backButtonUrl;
 };
 
