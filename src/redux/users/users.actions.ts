@@ -6,7 +6,7 @@ export function fetchUsers(): types.UsersActionTypes {
   };
 }
 
-export function updateUsers(users: types.UsersList): types.UsersActionTypes {
+export function updateUsers(users: types.UsersList): types.UpdateUsersAction {
   return {
     type: types.UPDATE_USERS,
     payload: users,

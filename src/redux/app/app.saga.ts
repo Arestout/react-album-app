@@ -6,15 +6,24 @@ import { hideLoader, showError, showLoader } from './app.actions';
 
 import { api } from '../../api/api';
 
-type OptionsTypes = {
-  fetcherParam?: string,
-  update: ActionCreator<AnyAction>,
+type FillActionType<T> = (
+  payload: T
+) => {
+  type: string,
+  payload: T,
+};
+
+type OptionsTypes<T> = {
+  fetcherParam: string,
+  update: FillActionType<T>,
   showError: ActionCreator<AnyAction>,
   showLoader: ActionCreator<AnyAction>,
   hideLoader: ActionCreator<AnyAction>,
 };
 
-export function* makeRequestWithSpinner(options: OptionsTypes): SagaIterator {
+export function* makeRequestWithSpinner<T>(
+  options: OptionsTypes<T>
+): SagaIterator {
   const { fetcherParam, update } = options;
 
   try {

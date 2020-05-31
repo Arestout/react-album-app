@@ -14,7 +14,7 @@ export type Albums = Album[];
 export type PhotosForCount = AlbumForCount[];
 
 export const FETCH_ALBUMS = 'FETCH_ALBUMS';
-type FetchAlbumsAction = {
+export type FetchAlbumsAction = {
   type: typeof FETCH_ALBUMS,
   payload: string,
 };

@@ -7,7 +7,7 @@ export function fetchPhotos(albumId: string): types.PhotosActionTypes {
   };
 }
 
-export function updatePhotos(photos: types.Photos): types.PhotosActionTypes {
+export function updatePhotos(photos: types.Photos): types.UpdatePhotosAction {
   return {
     type: types.UPDATE_PHOTOS,
     payload: photos,
