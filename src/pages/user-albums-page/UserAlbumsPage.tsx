@@ -36,9 +36,9 @@ const AlbumsList = styled.ul`
 `;
 
 export const UserAlbumsPage: FC = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
 
-  const { albumsList, isLoading, photosForCount } = useFetchAlbums(id);
+  const { albumsList, isLoading, photosForCount } = useFetchAlbums(userId);
 
   const albums =
     isLoading ||

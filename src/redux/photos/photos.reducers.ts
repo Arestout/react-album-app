@@ -12,6 +12,8 @@ const initialState: PhotosState = {
   photoIndex: 0,
 };
 
+const neverReached = (_never: never) => {};
+
 export const photosReducers = (
   state = initialState,
   action: types.PhotosActionTypes
@@ -52,6 +54,7 @@ export const photosReducers = (
           state.photosList.length,
       };
     default:
-      return state;
+      neverReached(action);
   }
+  return state;
 };

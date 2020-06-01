@@ -30,11 +30,6 @@ export type CloseGalleryModalAction = {
   type: typeof CLOSE_GALLERY_MODAL,
 };
 
-export const GET_PHOTO_INDEX = 'GET_PHOTO_INDEX';
-export type GetPhotoIndexAction = {
-  type: typeof GET_PHOTO_INDEX,
-};
-
 export const UPDATE_PHOTO_INDEX_NEXT = 'UPDATE_PHOTO_INDEX_NEXT';
 export type UpdatePhotoIndexNextAction = {
   type: typeof UPDATE_PHOTO_INDEX_NEXT,
@@ -50,6 +45,5 @@ export type PhotosActionTypes =
   | UpdatePhotosAction
   | OpenGalleryModalAction
   | CloseGalleryModalAction
-  | GetPhotoIndexAction
   | UpdatePhotoIndexNextAction
   | UpdatePhotoIndexPrevAction;

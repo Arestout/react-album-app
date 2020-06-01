@@ -48,10 +48,10 @@ const getBackButtonUrl = (url: string): string => {
 };
 
 export const AlbumPhotosPage: FC = () => {
-  const { id } = useParams();
+  const { albumId } = useParams();
   const history = useHistory();
   const { url } = useRouteMatch();
-  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(id);
+  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(albumId);
   const backButtonUrl = getBackButtonUrl(url);
 
   const photos =

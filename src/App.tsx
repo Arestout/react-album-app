@@ -12,8 +12,8 @@ export const App: FC = () => (
     <Header />
     <Switch>
       <Route exact path="/" component={UsersOverviewPage} />
-      <Route exact path="/users/:id/albums" component={UserAlbumsPage} />
-      <Route path="/users/:id/albums/:id" component={AlbumPhotosPage} />
+      <Route exact path="/users/:userId/albums" component={UserAlbumsPage} />
+      <Route path="/users/:id/albums/:albumId" component={AlbumPhotosPage} />
     </Switch>
   </div>
 );

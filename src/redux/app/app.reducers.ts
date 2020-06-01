@@ -10,6 +10,8 @@ const initialState: AppState = {
   errorMessage: '',
 };
 
+const neverReached = (_never: never) => {};
+
 export const appReducers = (
   state = initialState,
   action: types.AppActionTypes
@@ -22,6 +24,7 @@ export const appReducers = (
     case types.SHOW_ERROR:
       return { ...state, errorMessage: action.payload };
     default:
-      return state;
+      neverReached(action);
   }
+  return state;
 };

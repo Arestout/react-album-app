@@ -8,6 +8,8 @@ const initialState: UsersState = {
   usersList: [],
 };
 
+const neverReached = (_never: never) => {};
+
 export const usersReducers = (
   state = initialState,
   action: types.UsersActionTypes
@@ -23,6 +25,7 @@ export const usersReducers = (
         usersList: action.payload,
       };
     default:
-      return state;
+      neverReached(action);
   }
+  return state;
 };

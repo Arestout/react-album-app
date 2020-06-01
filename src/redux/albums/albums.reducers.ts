@@ -10,6 +10,8 @@ const initialState: AlbumsState = {
   photosForCount: [],
 };
 
+const neverReached = (_never: never) => {};
+
 export const albumsReducers = (
   state = initialState,
   action: types.AlbumsActionTypes
@@ -34,6 +36,7 @@ export const albumsReducers = (
         photosForCount: action.payload,
       };
     default:
-      return state;
+      neverReached(action);
   }
+  return state;
 };
