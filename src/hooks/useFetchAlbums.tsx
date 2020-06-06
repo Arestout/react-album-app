@@ -8,13 +8,16 @@ import { AlbumsState } from '../redux/albums/albums.reducers';
 
 type FetchAlbumsState = {
   isLoading: boolean,
+  errorMessage: string,
   albumsList: types.Albums,
   photosForCount: types.PhotosForCount,
 };
 
 export const useFetchAlbums = (userId: string): FetchAlbumsState => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.app);
+  const { isLoading, errorMessage } = useSelector(
+    (state: RootState) => state.app
+  );
   const { albumsList, photosForCount } = useSelector<RootState, AlbumsState>(
     (state: RootState) => state.albums
   );
@@ -25,6 +28,7 @@ export const useFetchAlbums = (userId: string): FetchAlbumsState => {
 
   return {
     isLoading,
+    errorMessage,
     albumsList,
     photosForCount,
   };

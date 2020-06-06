@@ -7,6 +7,7 @@ import { Loader } from '../../components/loader/Loader';
 import { Album } from '../../components/album/Album';
 
 import { useFetchAlbums } from '../../hooks/useFetchAlbums';
+import { ErrorMessage } from '../../components/error-message/ErrorMessage';
 
 const UserAlbumsContainer = styled.div`
   min-height: 300px;
@@ -35,16 +36,26 @@ const AlbumsList = styled.ul`
   text-align: center;
 `;
 
-export const UserAlbumsPage: FC = () => {
+export const AlbumsPage: FC = () => {
   const { userId } = useParams();
 
-  const { albumsList, isLoading, photosForCount } = useFetchAlbums(userId);
+  const {
+    albumsList,
+    isLoading,
+    errorMessage,
+    photosForCount,
+  } = useFetchAlbums(userId);
 
   const albums =
     isLoading ||
+    errorMessage ||
     albumsList.map((album: types.Album) => (
       <Album key={album.id} album={album} photosForCount={photosForCount} />
     ));
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   if (isLoading) {
     return <Loader />;

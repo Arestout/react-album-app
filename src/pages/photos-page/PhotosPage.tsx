@@ -6,9 +6,11 @@ import * as types from '../../redux/photos/photos.types';
 import { Loader } from '../../components/loader/Loader';
 import { Photo } from '../../components/photo/Photo';
 import { LightboxGallery } from '../../components/lightbox-gallery/LightboxGallery';
+import { ErrorMessage } from '../../components/error-message/ErrorMessage';
 
 import { useFetchPhotos } from '../../hooks/useFetchPhotos';
 
+// Styles
 const PhotosContainer = styled.div`
   min-height: 300px;
   margin: 0 0 0 100px;
@@ -36,29 +38,30 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-const getBackButtonUrl = (url: string): string => {
-  let backButtonUrl = '';
-  if (url.charAt(url.length - 1) === '/') {
-    backButtonUrl = url.slice(0, url.lastIndexOf('/'));
-    backButtonUrl = backButtonUrl.slice(0, backButtonUrl.lastIndexOf('/'));
-  } else {
-    backButtonUrl = url.slice(0, url.lastIndexOf('/'));
-  }
-  return backButtonUrl;
-};
+// Utils
+const getBackButtonUrl = (url: string): string =>
+  url.slice(0, url.lastIndexOf('/'));
 
-export const AlbumPhotosPage: FC = () => {
+// Component
+export const PhotosPage: FC = () => {
   const { albumId } = useParams();
   const history = useHistory();
   const { url } = useRouteMatch();
-  const { photosList, isLoading, galleryIsOpen } = useFetchPhotos(albumId);
+  const { photosList, isLoading, errorMessage, galleryIsOpen } = useFetchPhotos(
+    albumId
+  );
   const backButtonUrl = getBackButtonUrl(url);
 
   const photos =
     isLoading ||
+    errorMessage ||
     photosList.map((photo: types.Photo) => (
       <Photo key={photo.id} photo={photo} />
     ));
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   if (isLoading) {
     return <Loader />;

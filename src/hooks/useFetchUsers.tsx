@@ -8,12 +8,15 @@ import { UsersState } from '../redux/users/users.reducers';
 
 type FetchUsersState = {
   isLoading: boolean,
+  errorMessage: string,
   usersList: types.UsersList,
 };
 
 export const useFetchUsers = (): FetchUsersState => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.app);
+  const { isLoading, errorMessage } = useSelector(
+    (state: RootState) => state.app
+  );
   const { usersList } = useSelector<RootState, UsersState>(
     (state: RootState) => state.users
   );
@@ -24,6 +27,7 @@ export const useFetchUsers = (): FetchUsersState => {
 
   return {
     isLoading,
+    errorMessage,
     usersList,
   };
 };

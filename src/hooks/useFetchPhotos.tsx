@@ -8,13 +8,16 @@ import { PhotosState } from '../redux/photos/photos.reducers';
 
 type FetchPhotosState = {
   isLoading: boolean,
+  errorMessage: string,
   photosList: types.Photos,
   galleryIsOpen: boolean,
 };
 
 export const useFetchPhotos = (albumId: string): FetchPhotosState => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.app);
+  const { isLoading, errorMessage } = useSelector(
+    (state: RootState) => state.app
+  );
   const { photosList, galleryIsOpen } = useSelector<RootState, PhotosState>(
     (state: RootState) => state.photos
   );
@@ -25,6 +28,7 @@ export const useFetchPhotos = (albumId: string): FetchPhotosState => {
 
   return {
     isLoading,
+    errorMessage,
     photosList,
     galleryIsOpen,
   };

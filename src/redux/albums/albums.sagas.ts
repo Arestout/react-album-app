@@ -27,7 +27,7 @@ export function* fetchAlbumsSagaWorker({
     yield put(hideLoader());
     albumsPhotosCount.length = 0;
   } catch (error) {
-    yield put(showError(error));
+    yield put(showError(error.message));
     yield put(hideLoader());
   }
 }

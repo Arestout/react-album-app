@@ -6,6 +6,7 @@ import { User } from '../../components/user/User';
 import { User as UserType } from '../../redux/users/users.types';
 
 import { useFetchUsers } from '../../hooks/useFetchUsers';
+import { ErrorMessage } from '../../components/error-message/ErrorMessage';
 
 const UsersOverviewContainer = styled.div`
   min-height: 300px;
@@ -25,12 +26,17 @@ const UsersList = styled.ul`
   text-align: center;
 `;
 
-export const UsersOverviewPage: FC = () => {
-  const { usersList, isLoading } = useFetchUsers();
+export const UsersPage: FC = () => {
+  const { usersList, isLoading, errorMessage } = useFetchUsers();
 
   const users =
     isLoading ||
+    errorMessage ||
     usersList.map((user: UserType) => <User key={user.id} user={user} />);
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   if (isLoading) {
     return <Loader />;
