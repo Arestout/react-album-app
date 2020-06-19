@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { openGalleryModal } from '../../redux/photos/photos.actions';
 import { Photo as PhotoType } from '../../redux/photos/photos.types';
 
+// Styles
 const PhotoContainer = styled.li`
   display: inline-block;
   width: 200px;
@@ -29,6 +30,11 @@ type PhotoTypes = {
   photo: PhotoType,
 };
 
+//Utils
+const openModal = (dispatch: Function, photoId: string) => () =>
+  dispatch(openGalleryModal(photoId));
+
+// Component
 export const Photo: FC<PhotoTypes> = ({ photo }: PhotoTypes) => {
   const dispatch = useDispatch();
 
@@ -37,7 +43,7 @@ export const Photo: FC<PhotoTypes> = ({ photo }: PhotoTypes) => {
       <Image
         src={photo.thumbnailUrl}
         alt={photo.title}
-        onClick={() => dispatch(openGalleryModal(photo.id))}
+        onClick={openModal(dispatch, photo.id)}
       />
     </PhotoContainer>
   );
