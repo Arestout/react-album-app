@@ -7,8 +7,8 @@ export function fetchUsers(): types.UsersActionTypes {
 }
 
 export function updateUsers(users: types.UsersList): types.UpdateUsersAction {
-  return {
+  return ({
     type: types.UPDATE_USERS,
     payload: users,
-  };
+  } as const);
 }

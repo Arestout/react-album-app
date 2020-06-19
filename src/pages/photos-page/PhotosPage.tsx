@@ -38,10 +38,6 @@ const PhotosList = styled.ul`
   text-align: center;
 `;
 
-// Utils
-const getBackButtonUrl = (url: string): string =>
-  url.slice(0, url.lastIndexOf('/'));
-
 // Component
 export const PhotosPage: FC = () => {
   const { albumId } = useParams();
@@ -50,7 +46,11 @@ export const PhotosPage: FC = () => {
   const { photosList, isLoading, errorMessage, galleryIsOpen } = useFetchPhotos(
     albumId
   );
-  const backButtonUrl = getBackButtonUrl(url);
+  const backButtonUrl = url.slice(0, url.lastIndexOf('/'));
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   const photos =
     isLoading ||
@@ -58,10 +58,6 @@ export const PhotosPage: FC = () => {
     photosList.map((photo: types.Photo) => (
       <Photo key={photo.id} photo={photo} />
     ));
-
-  if (errorMessage) {
-    return <ErrorMessage errorMessage={errorMessage} />;
-  }
 
   if (isLoading) {
     return <Loader />;
