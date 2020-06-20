@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useParams, useHistory, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import * as types from '../../redux/photos/photos.types';
 
@@ -9,6 +10,7 @@ import { LightboxGallery } from '../../components/lightbox-gallery/LightboxGalle
 import { ErrorMessage } from '../../components/error-message/ErrorMessage';
 
 import { useFetchPhotos } from '../../hooks/useFetchPhotos';
+import { openGalleryModal } from '../../redux/photos/photos.actions';
 
 // Styles
 const PhotosContainer = styled.div`
@@ -42,15 +44,17 @@ const PhotosList = styled.ul`
 export const PhotosPage: FC = () => {
   const { albumId } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { url } = useRouteMatch();
   const { photosList, isLoading, errorMessage, galleryIsOpen } = useFetchPhotos(
     albumId
   );
   const backButtonUrl = url.slice(0, url.lastIndexOf('/'));
 
-  if (errorMessage) {
-    return <ErrorMessage errorMessage={errorMessage} />;
-  }
+  const openModal = (event: React.MouseEvent) => {
+    const photoId = (event.target as HTMLImageElement).id;
+    dispatch(openGalleryModal(photoId));
+  };
 
   const photos =
     isLoading ||
@@ -58,6 +62,10 @@ export const PhotosPage: FC = () => {
     photosList.map((photo: types.Photo) => (
       <Photo key={photo.id} photo={photo} />
     ));
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   if (isLoading) {
     return <Loader />;
@@ -73,7 +81,7 @@ export const PhotosPage: FC = () => {
       <MenuLink href="#" onClick={() => history.push(`${backButtonUrl}`)}>
         Back to Albums
       </MenuLink>
-      <PhotosList>{photos}</PhotosList>
+      <PhotosList onClick={openModal}>{photos}</PhotosList>
     </PhotosContainer>
   );
 };

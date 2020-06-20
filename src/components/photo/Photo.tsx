@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { openGalleryModal } from '../../redux/photos/photos.actions';
 import { Photo as PhotoType } from '../../redux/photos/photos.types';
 
 // Styles
@@ -30,21 +28,11 @@ type PhotoTypes = {
   photo: PhotoType,
 };
 
-//Utils
-const openModal = (dispatch: Function, photoId: string) => () =>
-  dispatch(openGalleryModal(photoId));
-
 // Component
 export const Photo: FC<PhotoTypes> = ({ photo }: PhotoTypes) => {
-  const dispatch = useDispatch();
-
   return (
     <PhotoContainer>
-      <Image
-        src={photo.thumbnailUrl}
-        alt={photo.title}
-        onClick={openModal(dispatch, photo.id)}
-      />
+      <Image src={photo.thumbnailUrl} alt={photo.title} id={photo.id} />
     </PhotoContainer>
   );
 };

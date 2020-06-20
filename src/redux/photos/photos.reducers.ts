@@ -1,9 +1,9 @@
 import * as types from './photos.types';
 
 export type PhotosState = {
-  photosList: types.Photos,
-  galleryIsOpen: boolean,
-  photoIndex: number,
+  photosList: types.Photos;
+  galleryIsOpen: boolean;
+  photoIndex: number;
 };
 
 const initialState: PhotosState = {
