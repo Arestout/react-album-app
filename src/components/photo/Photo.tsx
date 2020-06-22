@@ -25,14 +25,14 @@ const Image = styled.img`
 
 // Types
 type PhotoTypes = {
-  photo: PhotoType,
+  photo: PhotoType;
 };
 
 // Component
 export const Photo: FC<PhotoTypes> = ({ photo }: PhotoTypes) => {
   return (
     <PhotoContainer>
-      <Image src={photo.thumbnailUrl} alt={photo.title} id={photo.id} />
+      <Image src={photo.thumbnailUrl} alt={photo.title} data-id={photo.id} />
     </PhotoContainer>
   );
 };

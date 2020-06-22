@@ -52,8 +52,10 @@ export const PhotosPage: FC = () => {
   const backButtonUrl = url.slice(0, url.lastIndexOf('/'));
 
   const openModal = (event: React.MouseEvent) => {
-    const photoId = (event.target as HTMLImageElement).id;
-    dispatch(openGalleryModal(photoId));
+    const photoId = (event.target as HTMLImageElement).dataset.id;
+    if (photoId != null) {
+      dispatch(openGalleryModal(photoId));
+    }
   };
 
   const photos =

@@ -33,7 +33,7 @@ export const photosReducers = (
         ...state,
         galleryIsOpen: true,
         photoIndex: state.photosList.findIndex(
-          (photo) => photo.id === action.payload
+          (photo) => Number(photo.id) === Number(action.payload)
         ),
       };
     case types.CLOSE_GALLERY_MODAL:
